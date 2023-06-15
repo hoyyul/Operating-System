@@ -1,0 +1,39 @@
+FIFO
+Total number of tracks swept on each device: (Total number of tracks = Total number of cylinders * heads)
+    Device 0: 20306 (10153 cylinders, 2 platters)
+    Device 1: 130 (65 cylinders, 2 platters)
+    Device 2: 14 (14 cylinders, 1 platters)
+
+Average number of tracks swept per I/O request:
+    Device 0: 14 (7 cylinders, 2 platters)
+    Device 1: 2 (1 cylinders, 2 platters)
+    Device 2: 1 (1 cylinders, 1 platters)
+
+Average turnaround time for I/O requests:
+    Device 0: 1237
+    Device 1: 240
+    Device 2: 477
+
+System Throughput: 0.00002302 thread per unit of time
+-------------------------------------------------------
+modified SSTF
+Total number of tracks swept on each device: (Total number of tracks = Total number of cylinders * heads)
+    Device 0: 17948 (8974 cylinders, 2 platters)
+    Device 1: 1464 (732 cylinders, 2 platters)
+    Device 2: 216 (216 cylinders, 1 platters)
+
+Average number of tracks swept per I/O request:
+    Device 0: 4 (2 cylinders, 2 platters)
+    Device 1: 8 (4 cylinders, 2 platters)
+    Device 2: 3 (3 cylinders, 1 platters)
+
+Average turnaround time for I/O requests:
+    Device 0: 579
+    Device 1: 254
+    Device 2: 963
+
+System Throughput: 0.00004189 thread per unit of time
+-------------------------------------------------------
+Conclusion:
+    We can find the modified SSTF has a better performance in utilizing the CPU from the system throughput. Even
+though both approaches are unfair, the modified SSTF is the one less unfair.

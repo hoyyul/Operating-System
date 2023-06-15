@@ -1,0 +1,268 @@
+Sim: 0 [EventEngine.EventDriver]  
+	Simulation Start Time: Wed Nov 04 19:35:39 EST 2020
+	Parameter file: Misc/params.osp
+
+	Legend:
+	  Thread(X:Y/S) means: thread X of task Y, status=S
+	  Task(X/S) means: task X, status=S
+	  Page(X:Y/Z) means: page X of task Y in frame Z
+	  Openfile(X:Y/Z) means: open file X of task Y on device Z
+	  Port(X:Y/S) means: port X of task Y has status S
+	Status code abbreviations:
+	  RD(ThreadReady), RU(ThreadRunning),
+	  Wn(ThreadWaiting, n=waitlevel), KL(ThreadKill)
+	  L(TaskLive), T(TaskTerm), NN(NONE)
+	  L(PortLive), D(PortDestroyed), NN(NONE)
+
+
+Sim: 0 [IFLModules.ResourceCB]  
+	Deadlock handling mode: Detection
+Sim: 0 [IFLModules.TaskCB]  
+	Entering create()
+Mod: 0 [Tasks.TaskCB]  
+	Task(1/NN) created
+Sim: 0 [IFLModules.FileSys]  
+	Creating file: create(/vm/1,65536)
+Mod: 0 [FileSys.FileSys]  
+	Creating file: create(/vm/1,65536)
+Mod: 0 [FileSys.FileSys]  
+	New file size 64 blocks
+Mod: 0 [FileSys.FileSys]  
+	Inode(Id(0),Device(0),BlockCount(64),OpenCount(0),LinkCount(1))
+	  File `/vm/1', blocksize=64 created on device 0
+Sim: 0 [IFLModules.FileSys]  
+	System call create(`/vm/1')  succeeded, as expected
+Sim: 0 [IFLModules.OpenFile]  
+	System call open(`/vm/1')
+Sim: 0 [Tasks.TaskCB]  
+	Adding Openfile(0:1/0) to the open files table of Task(1/L)
+Mod: 0 [FileSys.OpenFile]  
+	File `/vm/1' opened 1 times
+Sim: 0 [IFLModules.OpenFile]  
+	File `/vm/1' opened as Openfile(0:1/0)
+Sim: 0 [IFLModules.FileSys]  
+	System call open(`/vm/1')  succeeded, as expected
+Sim: 0 [IFLModules.ThreadCB]  
+	Trying to create new thread for Task(1/L)
+Mod: 0 [Threads.ThreadCB]  
+	Created Thread(0:null/NN)
+Mod: 0 [Threads.ThreadCB]  
+	Successfully added Thread(0:1/RD) to Task(1/L)
+Sim: 0 [IFLModules.ThreadCB]  
+	Created new thread Thread(0:1/RD)
+Sim: 0 [IFLModules.ThreadCB]  
+	Entering dispatch(); current running thread is null
+Mod: 0 [Threads.ThreadCB]  
+	Dispatching Thread(0:1/RU)
+Sim: 0 [IFLModules.ThreadCB]  
+	Dispatching Thread(0:1/RU)
+Sim: 0 [IFLModules.ThreadCB]  
+	Leaving dispatch()
+Sim: 11 [IFLModules.FileSys]  
+	System call delete(`/etc/go/Oh,my/go')
+Mod: 11 [FileSys.FileSys]  
+	File `/etc/go/Oh,my/go' doesn't exist -- cannot delete
+Sim: 11 [IFLModules.FileSys]  
+	System call delete(`/etc/go/Oh,my/go')  failed, as expected
+Sim: 18 [IFLModules.MMU]  
+	Call: MMU.refer(Address(12617),MemoryWrite,Thread(0:1/RU))
+	  [Page(12:1/null),null,ValidFlag(OSP)=false,ValidFlag(Student)=false,ValidatingThread=null]
+Sim: 18 [IFLModules.PageFaultHandler]  
+	Pagefault handler entered for: Page(12:1/null),Unknown,Thread(0:1/RU)
+Sim: 18 [Threads.ThreadCB]  
+	Entering suspend(Thread(0:1/RU),SystemEvent(Processing page fault))
+Mod: 18 [Threads.ThreadCB]  
+	Entering suspend(Thread(0:1/RU),SystemEvent(Processing page fault))
+Sim: 18 [Threads.ThreadCB]  
+	Leaving suspend(Thread(0:1/W0),SystemEvent(Processing page fault))
+Sim: 18 [Memory.PageTableEntry]  
+	Setting validating thread for Page(12:1/null) to Thread(0:1/W0)
+Sim: 18 [Memory.FrameTableEntry]  
+	Task(1/L) is reserving free Frame(0)
+Sim: 18 [Memory.FrameTableEntry]  
+	Setting page of Frame(0) to Page(12:1/0)
+Sim: 18 [FileSys.OpenFile]  
+	System call read(Openfile(0:1/0),Block(12),Page(12:1/0),Thread(0:1/W0))
+Sim: 18 [Threads.ThreadCB]  
+	Entering suspend(Thread(0:1/W0),SystemEvent(FileRead))
+Mod: 18 [Threads.ThreadCB]  
+	Entering suspend(Thread(0:1/W0),SystemEvent(FileRead))
+Sim: 18 [Threads.ThreadCB]  
+	Leaving suspend(Thread(0:1/W1),SystemEvent(FileRead))
+Mod: 18 [FileSys.OpenFile]  
+	Creating IORB(Id(0),Device(0),Page(12:1/0),Diskblock(12),FileRead,Openfile(0:1/0),Thread(0:1/W1))
+Sim: 18 [Hardware.Disk]  
+	Enqueueing IORB(Id(0),Device(0),Page(12:1/0),Diskblock(12),FileRead,Openfile(0:1/0),Thread(0:1/W1))
+Sim: 18 [Hardware.Disk]  
+	Thread(0:1/W1) requests to enqueue IORB(Id(0),Device(0),Page(12:1/0),Diskblock(12),FileRead,Openfile(0:1/0),Thread(0:1/W1))
+Mod: 18 [Hardware.Disk]  
+	Entering do_enqueueIORB for IORB(Id(0),Device(0),Page(12:1/0),Diskblock(12),FileRead,Openfile(0:1/0),Thread(0:1/W1))
+	Locking Page(12:1/0)
+Sim: 18 [Memory.PageTableEntry]  
+	Entering lock(Page(12:1/0),IORB(Id(0),Device(0),Page(12:1/0),Diskblock(12),FileRead,Openfile(0:1/0),Thread(0:1/W1)))
+Sim: 18 [Memory.PageTableEntry]  
+	Leaving lock(Page(12:1/0),IORB(Id(0),Device(0),Page(12:1/0),Diskblock(12),FileRead,Openfile(0:1/0),Thread(0:1/W1)))
+Sim: 18 [Hardware.Disk]  
+	After enqueueing IORB(Id(0),Device(0),Page(12:1/0),Diskblock(12),FileRead,Openfile(0:1/0),Thread(0:1/W1)):
+	  Incrementing IORB count for Openfile(0:1/0) iorbCount = 0, the OSP value = 0
+Sim: 18 [Hardware.Disk]  
+	Leaving enqueueIORB(IORB(Id(0),Device(0),Page(12:1/0),Diskblock(12),FileRead,Openfile(0:1/0),Thread(0:1/W1)))
+Mod: 18 [FileSys.OpenFile]  
+	Thread(0:1/W1) is resumed after IORB(Id(0),Device(0),Page(12:1/0),Diskblock(12),FileRead,Openfile(0:1/0),Thread(0:1/W1)) has been processed
+Sim: 18 [Threads.ThreadCB]  
+	Entering resume(Thread(0:1/W1))
+Mod: 18 [Threads.ThreadCB]  
+	Resuming Thread(0:1/W1)
+Sim: 18 [Threads.ThreadCB]  
+	Leaving resume(Thread(0:1/W0))
+Sim: 18 <<Error!>> [FileSys.OpenFile]  
+	Call to do_read() for IORB(Id(0),Device(0),Page(12:1/0),Diskblock(12),FileRead,Openfile(0:1/0),Thread(0:1/W0)) finished but the IORB hasn't,
+	  and the creator Thread(0:1/W0) is alive.
+	  Probable cause: forgot to suspend Thread(0:1/W0) on the IORB in do_read()
+
+	at osp.IFLModules.IflOpenFile.read(IflOpenFile.java:445)
+	at osp.Memory.PageFaultHandler.doSwapIn(PageFaultHandler.java:209)
+	at osp.Memory.PageFaultHandler.do_handlePageFault(PageFaultHandler.java:106)
+	at osp.IFLModules.IflPageFaultHandler.handlePageFault(IflPageFaultHandler.java:138)
+	at osp.IFLModules.IflPageFaultHandler.handleInterrupt(IflPageFaultHandler.java:44)
+	at osp.Interrupts.Interrupts.if(Interrupts.java:48)
+	at osp.Hardware.CPU.interrupt(CPU.java:54)
+	at osp.Memory.MMU.do_refer(MMU.java:92)
+	at osp.IFLModules.IflMMU.a(IflMMU.java:220)
+	at osp.IFLModules.ReferThread.run(ReferThread.java:61)
+
+Sim:18 [Utilities.SnapshotTaker]  
+	
+
+[Snapshot at 18]
+
+MEMORY:
+  Free frames: 29(96%) out of 30
+  Locked frames: 1 out of 30
+  Reserved frames: 1 out of 30
+  Referenced frames: 0 out of 30
+
+Memory map:
+|----------|------------------------------|
+|Frame     |000000000011111111112222222222|
+|number    |012345678901234567890123456789|
+|----------|------------------------------|
+|free      | FFFFFFFFFFFFFFFFFFFFFFFFFFFFF|
+|lock      |100000000000000000000000000000|
+|reserved  |R                             |
+|dirty     |                              |
+|referenced|                              |
+|----------|------------------------------|
+|          |                              |
+|page      |1                             |
+|number    |2                             |
+|----------|------------------------------|
+|          |                              |
+|owner     |                              |
+|task      |1                             |
+|----------|------------------------------|
+
+
+Page table for Task 1:
+  Valid pages: 0 out of 64
+|------|----------------------------------------------------------------|
+|Page  |0000000000111111111122222222223333333333444444444455555555556666|
+|number|0123456789012345678901234567890123456789012345678901234567890123|
+|------|----------------------------------------------------------------|
+|valid |                                                                |
+|------|----------------------------------------------------------------|
+|      |                                                                |
+|frame |                                                                |
+|number|            0                                                   |
+|------|----------------------------------------------------------------|
+
+
+DEVICES:
+  Device 0: Swap Device   (mount point: /vm/)
+	    Number of pages read = 0
+	    Number of pages written = 0
+	    Average number of cylinders swept per disk access = 0
+	      Total number of cylinders swept = 0
+	    Service time per I/O request: 0
+	    Device queue:  Empty
+  Device 1: Disk   (mount point: /etc/go/)
+	    Number of pages read = 0
+	    Number of pages written = 0
+	    Average number of cylinders swept per disk access = 0
+	      Total number of cylinders swept = 0
+	    Service time per I/O request: 0
+	    Device queue:  Empty
+  Device 2: Disk   (mount point: /etc/)
+	    Number of pages read = 0
+	    Number of pages written = 0
+	    Average number of cylinders swept per disk access = 0
+	      Total number of cylinders swept = 0
+	    Service time per I/O request: 0
+	    Device queue:  Empty
+
+TASKS and THREADS:
+  CPU Utilization: 100.0%
+  Average service time per thread: 18.0
+  Average normalized service time per thread: 0.94736844
+  Total number of tasks: 1
+  Running thread(s): none
+  Threads summary: 1 alive
+  Among live threads: 0 running
+                      1 suspended
+                      0 ready
+  ready queue = ()
+  running thread(s) = ()
+  waiting thread(s) = (0:1)
+  thread(s) in pagefault = (0:1)
+  killed thread(s) = ()
+
+FILES:
+  Total number of files: 0
+  Total number of directories: 3
+  Total number of open files: 0
+  Device 0: 1472 out of 1536 blocks are free, 4.166669% used
+  Device 1: 40 out of 40 blocks are free, 0.0% used
+  Device 2: 16 out of 16 blocks are free, 0.0% used
+
+
+PORTS:
+  Number of Live Ports: 	0
+  Number of Ports Created: 	0
+  Number of Ports Destroyed: 	0
+  Number of Messages Sent: 	0
+  Number of Messages Received: 	0
+
+
+
+RESOURCES:
+  Total number of acquire() calls: 0
+  Total number of release() calls: 0
+
+    Resource Availability Table
+|---------------|-------------------------|
+|Resource Type  |0    1    2    3    4    |
+|---------------|-------------------------|
+|  Total        |8    8    8    6    9    |
+|---------------|-------------------------|
+|  Available    |8    8    8    6    9    |
+|---------------|-------------------------|
+
+
+
+    Resource Allocation Table
+|------------------|-----------------------------------|
+|Resource Type     |0      1      2      3      4      |
+|------------------|-----------------------------------|
+|------------------|-----------------------------------|
+
+
+
+
+The suspended  RRBs: 
+
+
+-----------------------------------------------
+
+Sim: 18 [Utilities.Simulation]  
+	Elapsed time: 0 seconds
+
